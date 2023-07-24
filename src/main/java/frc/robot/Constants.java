@@ -17,10 +17,11 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 // TODO:change the port into the according numbers
-public static final int MOTOR_LEFT_1_ID = 0;
+public static final int MOTOR_LEFT_1_ID = 9;
 public static final int MOTOR_LEFT_2_ID = 0;
-public static final int MOTOR_RIGHT_1_ID = 0;
-public static final int MOTOR_RIGHT_2_ID = 0;
+public static final int MOTOR_RIGHT_1_ID = 2;
+public static final int MOTOR_RIGHT_2_ID = 8;
+ 
 
-public static final int DRIVER_CONTROLLER 0;
+public static final int DRIVER_CONTROLLER = 0;
 }
