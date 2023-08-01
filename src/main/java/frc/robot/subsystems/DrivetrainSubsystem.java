@@ -15,11 +15,11 @@ import frc.robot.Constants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DriveTrain. */
-  private TalonSRX motorLeftprimary = new TalonSRX(Constants.MOTOR_LEFT_1_ID);;
-  private TalonSRX motorLeftfollwer = new TalonSRX(Constants.MOTOR_LEFT_2_ID);
+  private TalonSRX motorLeftprimary = new TalonSRX(Constants.MOTOR_LEFT_PRIMARY_ID);;
+  private TalonSRX motorLeftfollwer = new TalonSRX(Constants.MOTOR_LEFT_FOLLOWER_ID);
   // private TalonSRX motorRightprimary = new TalonSRX(Constants.MOTOR_RIGHT_1_ID);
-  private VictorSPX motorRightprimary = new VictorSPX(Constants.MOTOR_RIGHT_1_ID);
-  private TalonSRX motorRightfollower = new TalonSRX(Constants.MOTOR_RIGHT_2_ID);
+  private VictorSPX motorRightprimary = new VictorSPX(Constants.MOTOR_RIGHT_PRIMARY_ID);
+  private TalonSRX motorRightfollower = new TalonSRX(Constants.MOTOR_RIGHT_FOLLOWER_ID);
   public DrivetrainSubsystem() {
     motorLeftprimary.configFactoryDefault();
     motorLeftfollwer.configFactoryDefault();
@@ -30,16 +30,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
     motorLeftfollwer.follow(motorLeftprimary);
     motorRightfollower.follow(motorRightprimary);
 
-    motorLeftprimary.setInverted(InvertType.InvertMotorOutput);
-    motorLeftfollwer.setInverted(InvertType.FollowMaster);
-    motorRightprimary.setInverted(InvertType.None);
-    motorRightfollower.setInverted(InvertType.FollowMaster);
+    // motorLeftprimary.setInverted(InvertType.InvertMotorOutput);
+    // motorLeftfollwer.setInverted(InvertType.FollowMaster);
+    // motorRightprimary.setInverted(InvertType.None);
+    // motorRightfollower.setInverted(InvertType.FollowMaster);
 
     // or
-    // motorLeftprimary.setInverted(InvertType.None);
-    // motorLeftfollwer.setInverted(InvertType.FollowMaster);
-    // motorRightprimary.setInverted(InvertType.InvertMotorOutput);
-    // motorRightfollower.setInverted(InvertType.FollowMaster);
+    motorLeftprimary.setInverted(InvertType.None);
+    motorLeftfollwer.setInverted(InvertType.FollowMaster);
+    motorRightprimary.setInverted(InvertType.InvertMotorOutput);
+    motorRightfollower.setInverted(InvertType.FollowMaster);
   }
 
   @Override
