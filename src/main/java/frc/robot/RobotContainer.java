@@ -8,6 +8,8 @@ package frc.robot;
 // import frc.robot.commands.Autos;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+// import frc.robot.commands.ArmCommand;
+// import frc.robot.subsystems.ArmSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -26,6 +28,9 @@ public class RobotContainer {
 
   private DrivetrainSubsystem DRIVE_SUBSYSTEM = new DrivetrainSubsystem();
   private DefaultDriveCommand defaultDriveCommand = new DefaultDriveCommand(DRIVE_SUBSYSTEM, driverController);
+
+// //   private ArmSubsystem ARM_SUBSYSTEM = new ArmSubsystem();
+// // //   private ArmCommand armCommand = new ArmCommand();
   
   public double GetDriverRawAxis(int axis){
     return driverController.getRawAxis(axis);
@@ -58,6 +63,7 @@ public class RobotContainer {
 
   private void defaultCommands() {
     DRIVE_SUBSYSTEM.setDefaultCommand(defaultDriveCommand);
+    // ARM_SUBSYSTEM.setDefaultCommand(armCommand);
   }
 
   /**
