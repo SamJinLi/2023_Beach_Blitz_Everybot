@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenixpro.signals.InvertedValue;
 
@@ -18,11 +19,20 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private TalonSRX motorLeftprimary = new TalonSRX(Constants.MOTOR_LEFT_PRIMARY_ID);;
   private TalonSRX motorLeftfollwer = new TalonSRX(Constants.MOTOR_LEFT_FOLLOWER_ID);
   // private TalonSRX motorRightprimary = new TalonSRX(Constants.MOTOR_RIGHT_1_ID);
-  private VictorSPX motorRightprimary = new VictorSPX(Constants.MOTOR_RIGHT_PRIMARY_ID);
-  private TalonSRX motorRightfollower = new TalonSRX(Constants.MOTOR_RIGHT_FOLLOWER_ID);
+  private VictorSPX motorRightfollower  = new VictorSPX(Constants.MOTOR_RIGHT_FOLLOWER_ID);
+  private TalonSRX motorRightprimary = new TalonSRX(Constants.MOTOR_RIGHT_PRIMARY_ID);
   public DrivetrainSubsystem() {
     motorLeftprimary.configFactoryDefault();
     motorLeftfollwer.configFactoryDefault();
+
+    TalonSRXConfiguration config = new TalonSRXConfiguration();
+    config.peakCurrentLimit = 40; // the peak current, in amps
+    config.peakCurrentDuration = 1500; // the time at the peak current before the limit triggers, in ms
+    config.continuousCurrentLimit = 30; // the current to maintain if the peak limit is triggered
+    motorLeftprimary.configAllSettings(config); // apply the config settings; this selects the quadrature encoder
+    motorLeftfollwer.configAllSettings(config); // apply the config settings; this selects the quadrature encoder
+    motorRightprimary.configAllSettings(config);// apply the config settings; this selects the quadrature encoder
+
 
     motorRightprimary.configFactoryDefault();
     motorRightfollower.configFactoryDefault();
@@ -30,16 +40,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
     motorLeftfollwer.follow(motorLeftprimary);
     motorRightfollower.follow(motorRightprimary);
 
-    // motorLeftprimary.setInverted(InvertType.InvertMotorOutput);
-    // motorLeftfollwer.setInverted(InvertType.FollowMaster);
-    // motorRightprimary.setInverted(InvertType.None);
-    // motorRightfollower.setInverted(InvertType.FollowMaster);
+    motorLeftprimary.setInverted(InvertType.InvertMotorOutput);
+    motorLeftfollwer.setInverted(InvertType.FollowMaster);
+    motorRightprimary.setInverted(InvertType.None);
+    motorRightfollower.setInverted(InvertType.FollowMaster);
 
     // or
-    motorLeftprimary.setInverted(InvertType.None);
-    motorLeftfollwer.setInverted(InvertType.FollowMaster);
-    motorRightprimary.setInverted(InvertType.InvertMotorOutput);
-    motorRightfollower.setInverted(InvertType.FollowMaster);
+    // motorLeftprimary.setInverted(InvertType.None);
+    // motorLeftfollwer.setInverted(InvertType.FollowMaster);
+    // motorRightprimary.setInverted(InvertType.InvertMotorOutput);
+    // motorRightfollower.setInverted(InvertType.FollowMaster);
+
   }
 
   @Override
@@ -48,11 +59,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void setLeftMotors(double speed){
-    motorLeftprimary.set(ControlMode.PercentOutput,speed);
+    if (Math.abs(speed) < 0.70){
+    motorLeftprimary.set(ControlMode.PercentOutput,(speed));
+    }
   }
 
   public void setRightMotors(double speed){
-    motorRightprimary.set(ControlMode.PercentOutput,speed);
+    if (Math.abs(speed) < 0.70){
+        motorRightprimary.set(ControlMode.PercentOutput,(speed));
+        }
   }
 
   public void stop(){

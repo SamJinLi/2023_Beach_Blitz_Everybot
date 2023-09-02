@@ -16,16 +16,28 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-// TODO:change the port into the according numbers
-// public static final int MOTOR_LEFT_PRIMARY_ID = 9;
-// public static final int MOTOR_LEFT_FOLLOWER_ID = 0;
-// public static final int MOTOR_RIGHT_PRIMARY_ID = 2;
-// public static final int MOTOR_RIGHT_FOLLOWER_ID = 8;
-public static final int MOTOR_LEFT_PRIMARY_ID = 2;
-public static final int MOTOR_LEFT_FOLLOWER_ID = 8;
-public static final int MOTOR_RIGHT_PRIMARY_ID = 9;
-public static final int MOTOR_RIGHT_FOLLOWER_ID = 0;
- 
+// TODO:change the motors into a class/method, like Arm Constants
+public static final int MOTOR_LEFT_PRIMARY_ID = 9;
+public static final int MOTOR_LEFT_FOLLOWER_ID = 0;
+public static final int MOTOR_RIGHT_PRIMARY_ID = 8;
+public static final int MOTOR_RIGHT_FOLLOWER_ID = 2;
+// public static final int MOTOR_LEFT_PRIMARY_ID = 2;
+// public static final int MOTOR_LEFT_FOLLOWER_ID = 8;
+// public static final int MOTOR_RIGHT_PRIMARY_ID = 9;
+// public static final int MOTOR_RIGHT_FOLLOWER_ID = 0;
+
+public static final class ArmConstants{
+    // TODO: change these stuff as needed
+    public static final int k_ARM_DRIVE_LEADER_ID = 16;
+    //Uncomment k_MOTORS_REVERSED if true
+    public static final boolean k_MOTORS_REVERSED = true;
+    public class ControlType{
+        public static final int k_PERCENT = 0;
+        public static final int k_POSITION = 1;
+    } 
+    public static final double k_SOFT_LIMIT = 125;
+
+}
 
 public static final int DRIVER_CONTROLLER = 0;
 }

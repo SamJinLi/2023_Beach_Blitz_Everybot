@@ -43,19 +43,31 @@ public class DefaultDriveCommand extends CommandBase {
   public void execute() {
     left = controller.getRawAxis(1); // left y axis
     right = controller.getRawAxis(5); // right y axis
-    
-    if (Math.abs(controller.getRawAxis(1)) >0.4){
-        DRIVE_SUBSYSTEM.setLeftMotors(left_limiter.calculate(left));
-    }
-    else{
-        DRIVE_SUBSYSTEM.setLeftMotors(0);
-    }
-    if (Math.abs(controller.getRawAxis(5)) >0.4){
-        DRIVE_SUBSYSTEM.setRightMotors(right_limiter.calculate(right));
+    if (Math.abs(right) > 0.1){
+       DRIVE_SUBSYSTEM.setRightMotors(right);
     }
     else{
         DRIVE_SUBSYSTEM.setRightMotors(0);
     }
+    if (Math.abs(left) > 0.1){
+        DRIVE_SUBSYSTEM.setLeftMotors(left);
+    }
+    else {
+        DRIVE_SUBSYSTEM.setLeftMotors(0);
+    }
+    System.out.println("Left: " + left + " Right: " + right);
+    // if (Math.abs(controller.getRawAxis(1)) >0.1){
+    //     DRIVE_SUBSYSTEM.setLeftMotors(left_limiter.calculate(left));
+    // }
+    // else{
+    //     DRIVE_SUBSYSTEM.setLeftMotors(0);
+    // }
+    // if (Math.abs(controller.getRawAxis(5)) >0.1){
+    //     DRIVE_SUBSYSTEM.setRightMotors(right_limiter.calculate(right));
+    // }
+    // else{
+    //     DRIVE_SUBSYSTEM.setRightMotors(0);
+    // }
   } 
 
   // Called once the command ends or is interrupted.
