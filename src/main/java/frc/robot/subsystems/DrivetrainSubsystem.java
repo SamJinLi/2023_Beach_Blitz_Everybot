@@ -15,7 +15,7 @@ import frc.robot.Constants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DriveTrain. */
-  private TalonSRX motorLeftprimary = new TalonSRX(Constants.MOTOR_LEFT_PRIMARY_ID);;
+  private TalonSRX motorLeftprimary = new TalonSRX(Constants.MOTOR_LEFT_PRIMARY_ID);
   private TalonSRX motorLeftfollwer = new TalonSRX(Constants.MOTOR_LEFT_FOLLOWER_ID);
   // private TalonSRX motorRightprimary = new TalonSRX(Constants.MOTOR_RIGHT_1_ID);
   private VictorSPX motorRightfollower  = new VictorSPX(Constants.MOTOR_RIGHT_FOLLOWER_ID);
