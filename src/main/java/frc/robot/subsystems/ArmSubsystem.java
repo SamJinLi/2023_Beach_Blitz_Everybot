@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+
 // Libraries import from officila code start
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -38,14 +39,24 @@ import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
-  /** Creates a new ArmSubsystem. */
-  CANSparkMax arm = new CANSparkMax(ArmConstants.arm_ID, MotorType.kBrushless);
-  public ArmSubsystem() {
-      
-  }
+    /** Creates a new ArmSubsystem. */
+    private final SparkMaxPIDController armPidController;
+    private final RelativeEncoder armEncoder;
+    CANSparkMax arm = new CANSparkMax(ArmConstants.arm_ID, MotorType.kBrushless);
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    public ArmSubsystem() {
+        this.armPidController = arm.getPIDController();
+        this.armPidController.setP(.005);
+        this.armPidController.setI(0);
+        this.armPidController.setD(0);
+        this.armPidController.setFF(0);
+        this.armPidController.setIZone(0);
+
+        this.armEncoder = this.arm.getEncoder(Type.kHallSensor, 42);
+    }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }
