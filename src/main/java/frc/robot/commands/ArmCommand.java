@@ -12,8 +12,8 @@ import frc.robot.subsystems.ArmSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmCommand extends PIDCommand {
-  
-  private ArmSubsystem ARM_SUBSYSTEM;
+
+  private ArmSubsystem ARM_SUBSYSTEM = new ArmSubsystem();
 
   public ArmCommand() {
     super(
@@ -35,6 +35,7 @@ public class ArmCommand extends PIDCommand {
   @Override
   public void execute() {
       ARM_SUBSYSTEM.printEncoderVal();
+      System.out.println("test");
   }
 
   // Returns true when the command should end.
