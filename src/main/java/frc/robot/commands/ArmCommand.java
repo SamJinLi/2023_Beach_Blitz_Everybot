@@ -1,42 +1,47 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ArmCommand extends PIDCommand {
-
-  private ArmSubsystem ARM_SUBSYSTEM = new ArmSubsystem();
-
-  public ArmCommand() {
-    super(
-        // The controller that the command will use
-        new PIDController(0, 0, 0),
-        // This should return the measurement
-        () -> 0,
-        // This should return the setpoint (can also be a constant)
-        () -> 0,
-        // This uses the output
-        output -> {
-          // Use the output here
-        });
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
-    addRequirements(ARM_SUBSYSTEM);
+public class ArmCommand extends CommandBase {
+  private final ArmSubsystem armSubsystem;
+  private final double position;
+  private final PIDController armPidController;
+  private final Supplier<Double> armAdjust;
+  // TODO: ask: do we need this??? , Supplier<Double> armAdjust, Supplier<Double> wristAdjust
+  public ArmCommand(ArmSubsystem armSubsystem, double position, Supplier<Double> armAdjust) {
+    this.armSubsystem = armSubsystem;
+        this.position = position;
+        //this.telePidController = new PIDController(0.00, 0.00, 0.00);
+        // TODO: change the value of the arm PID
+        this.armPidController = new PIDController(0.05, 0.00, 0.00);
+        //this.armPidController = new PIDController(0.00, 0.00, 0.00);
+        //this.wristPidController = new PIDController(0.00, 0.00, 0.00);
+        this.armAdjust = armAdjust;
+        addRequirements(armSubsystem);
   }
 
+
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {}
+
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      ARM_SUBSYSTEM.printEncoderVal();
-      System.out.println("test");
+        double armSet  = position + (this.armAdjust.get());//was this.armAdjust.get()*-10 //if needed, change it back
+        double armOutput = armPidController.calculate(armSubsystem.getArmPositionDegree(), armSet);
+        armOutput = (armOutput > .3)?.3:(armOutput< -.3)?-.3:armOutput; //chagne the .3 if needed, it's the max and min percent output in decimal form? IDK or in percent form
+        this.armSubsystem.setArmMotor(armOutput);
   }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
