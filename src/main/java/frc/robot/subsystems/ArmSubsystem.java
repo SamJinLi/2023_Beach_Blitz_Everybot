@@ -53,6 +53,64 @@ public class ArmSubsystem extends SubsystemBase {
         this.armPidController.setIZone(0);
 
         this.armEncoder = this.arm.getEncoder(Type.kHallSensor, 42);
+
+        this.arm.burnFlash();
+
+        SmartDashboard.putNumber("arm voltage in v", (Double)arm.getBusVoltage());
+        SmartDashboard.putNumber("Arm output current in ams", arm.getOutputCurrent());
+    }
+
+    public void setArmMotor(double input) {
+         //stop it from going too far
+        
+        //reduce input because adding the holding value could make it over 1
+        input *= .9;
+        //get holding output flips itself so we just add this
+        //input += getArmHoldingOutput();
+        int valToChange = 0;//TODO: fix the valTOchange, was 0
+
+        if(Math.abs(getArmPositionDegree()) >= ArmConstants.k_SOFT_LIMIT && !((getArmPositionDegree() < valToChange ^ (input < valToChange)))){
+            input = 0;
+        }
+        //we only set the leader cuz the follower will just do the same
+        this.arm.set(input);
+        //updating the shuffle board output
+        SmartDashboard.putNumber("Arm output raw : ",input);
+
+
+        // kP = 0.05;
+        // kI = 0.2; // was 0.2
+        // iLimit = 8;
+        // // kI = 0;
+        // kD = 0.009;
+        // double error = position - armEncoder.getPosition();//-22
+        // double dt = Timer.getFPGATimestamp() - lastTimestamp;
+        // errorRate = (error - lastError) / dt;
+
+        // // SmartDashboard.putNumber("Raw encoder value Spark max arm", armEncoder.getPosition());
+        // SmartDashboard.putNumber("error", error);
+        // SmartDashboard.putNumber("errorrate", errorRate);
+        
+        // if (Math.abs(error) < iLimit) {
+        //     errorSum += error * dt;
+        //   }
+        // double outputSpeed = kP * error + kI*errorSum + kD * errorRate;
+        // if (position == zeron){
+        //     outputSpeed*=0.25;
+        // }
+        // arm.set(outputSpeed);
+
+        
+        // lastTimestamp = Timer.getFPGATimestamp();
+        // lastError = error;
+        // // SmartDashboard.putNumber("arm output", input);
+        // // SmartDashboard.putNumber("arm motor current (amps)", arm.getOutputCurrent());
+        // // SmartDashboard.putNumber("arm motor temperature (C)", arm.getMotorTemperature());
+    }
+
+    public double getArmPositionDegree(){
+        double angle = (armEncoder.getPosition() / 8.75);
+        return angle+0;
     }
 
     @Override
