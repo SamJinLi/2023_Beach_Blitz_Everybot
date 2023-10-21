@@ -26,11 +26,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
 
-  private DrivetrainSubsystem DRIVE_SUBSYSTEM = new DrivetrainSubsystem();
-  private DefaultDriveCommand defaultDriveCommand = new DefaultDriveCommand(DRIVE_SUBSYSTEM, driverController);
-
-  private ArmSubsystem ARM_SUBSYSTEM = new ArmSubsystem();
-  private ArmCommand armCommand = new ArmCommand();
+  private final DrivetrainSubsystem DRIVE_SUBSYSTEM = new DrivetrainSubsystem();
+  private final ArmSubsystem ARM_SUBSYSTEM = new ArmSubsystem();
   
   public double GetDriverRawAxis(int axis){
     return driverController.getRawAxis(axis);
@@ -62,8 +59,8 @@ public class RobotContainer {
 
 
   private void defaultCommands() {
-    DRIVE_SUBSYSTEM.setDefaultCommand(defaultDriveCommand);
-    ARM_SUBSYSTEM.setDefaultCommand(armCommand);
+    DRIVE_SUBSYSTEM.setDefaultCommand(new DefaultDriveCommand(DRIVE_SUBSYSTEM, driverController));
+    ARM_SUBSYSTEM.setDefaultCommand(new ArmCommand());
   }
 
   /**
